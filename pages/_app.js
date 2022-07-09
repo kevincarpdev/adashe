@@ -1,7 +1,5 @@
-import "../styles/globals.css";
 import "antd/dist/antd.css";
-import "../styles/style.css";
-import "../styles/global.scss";
+import "../styles/globals.scss";
 
 import { MoralisProvider } from "react-moralis";
 function MyApp({ Component, pageProps }) {
