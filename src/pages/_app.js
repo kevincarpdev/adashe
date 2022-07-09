@@ -1,11 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 import Account from "components/Account/Account";
 import Chains from "components/Chains";
 import TokenPrice from "components/TokenPrice";
@@ -13,18 +10,30 @@ import ERC20Balance from "components/ERC20Balance";
 import ERC20Transfers from "components/ERC20Transfers";
 import DEX from "components/DEX";
 import NFTBalance from "components/NFTBalance";
-import Wallet from "components/Wallet";
 import { Layout, Tabs } from "antd";
-import "antd/dist/antd.css";
 import NativeBalance from "components/NativeBalance";
-import "./style.css";
 import QuickStart from "components/QuickStart";
-import Contract from "components/Contract/Contract";
 import Text from "antd/lib/typography/Text";
 import Ramper from "components/Ramper";
 import MenuItems from "./components/MenuItems";
-const { Header, Footer } = Layout;
+import "./global.scss";
+import "antd/dist/antd.css";
+import "./style.css";
 
+// import cn from "classnames"
+// import { Card, Modal } from "antd";
+// import mainLogo from "./logo.png"
+// import menuLogo from "./menuLogo.png"
+// import Image from "next/image"
+// import { PieChart } from "react-minimal-pie-chart";
+// import PageBreak from "./PageBreak.svg";
+// import * as Scroll from "react-scroll";
+// import PageBreakBottom from "./PageBreakBottom.svg";
+// import { motion, AnimateSharedLayout } from "framer-motion";
+// import { MdSpaceDashboard } from "react-icons/md";
+// import Sticky from "react-stickynode";
+
+const { Header, Footer } = Layout;
 const styles = {
   content: {
     display: "flex",
@@ -55,10 +64,14 @@ const styles = {
     fontWeight: "600",
   },
 };
-const App = ({ isServerInfo }) => {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
-    useMoralis();
 
+const App = ({ isServerInfo }) => {
+  const { isWeb3Enabled, enableWeb3, isWeb3EnableLoading, isAuthenticated } = useMoralis();
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
+
+  
   useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
     if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
@@ -66,8 +79,94 @@ const App = ({ isServerInfo }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, isWeb3Enabled]);
 
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // let ScrollLink = Scroll.Link;
+  // const [stickyNav, setStickyNav] = useState(false)
+  // const login = async () => {
+  //   if (!isAuthenticated) {
+
+  //     await authenticate()
+  //       .then(function (user) {
+  //         console.log(Moralis.User.current().get("ethAddress"));
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+  // const defaultLabelStyle = {
+  //   fontSize: "5px",
+  //   fontFamily: "sans-serif",
+  // };
+  // const shiftSize = 7;
+  // const [open, setOpen] = useState(false)
+
+  // const handleStateChange = (status) => {
+  //   if (status.status === Sticky.STATUS_FIXED) {
+  //     document.body.classList.add("sticky-nav");
+  //   }
+  //   else {
+  //     document.body.classList.remove("sticky-nav");
+  //   }
+  //   return;
+  // };
+
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
+       <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: {
+            color: {
+              value: "#060B19",
+            },
+          },
+          fpsLimit: 120,
+          particles: {
+            color: {
+              value: "#382C53",
+            },
+            links: {
+              color: "#382C53",
+              distance: 250,
+              enable: true,
+              opacity: 1.0,
+              width: 2,
+            },
+            collisions: {
+              enable: true,
+            },
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: {
+                default: "bounce",
+              },
+              random: false,
+              speed: 0.8,
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 1920,
+              },
+              value: 100,
+            },
+            opacity: {
+              value: 1.0,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 1, max: 5 },
+            },
+          },
+          detectRetina: true,
+        }}
+      />
       <Router>
         <Header style={styles.header}>
           <Logo />
@@ -90,16 +189,10 @@ const App = ({ isServerInfo }) => {
             <Route exact path="/quickstart">
               <QuickStart isServerInfo={isServerInfo} />
             </Route>
-            <Route path="/wallet">
-              <Wallet />
-            </Route>
             <Route path="/1inch">
               <Tabs defaultActiveKey="1" style={{ alignItems: "center" }}>
                 <Tabs.TabPane tab={<span>Ethereum</span>} key="1">
                   <DEX chain="eth" />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab={<span>Binance Smart Chain</span>} key="2">
-                  <DEX chain="bsc" />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab={<span>Polygon</span>} key="3">
                   <DEX chain="polygon" />
@@ -118,17 +211,11 @@ const App = ({ isServerInfo }) => {
             <Route path="/nftBalance">
               <NFTBalance />
             </Route>
-            <Route path="/contract">
-              <Contract />
-            </Route>
             <Route path="/">
               <Redirect to="/quickstart" />
             </Route>
-            <Route path="/ethereum-boilerplate">
-              <Redirect to="/quickstart" />
-            </Route>
             <Route path="/nonauthenticated">
-              <>Please login using the "Authenticate" button</>
+              <>Please login using the &quot;Authenticate&quot; button</>
             </Route>
           </Switch>
         </div>
