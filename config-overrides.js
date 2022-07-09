@@ -1,8 +1,8 @@
 const webpack = require("webpack");
-const { override, addPostcssPlugins } = require('customize-cra')
+const { override, addPostcssPlugins } = require("customize-cra");
 module.exports = function override(config, env) {
-  addPostcssPlugins([require('tailwindcss')]),
-    config.resolve.fallback = {
+  addPostcssPlugins([require("tailwindcss")]),
+    (config.resolve.fallback = {
       url: require.resolve("url"),
       fs: require.resolve("fs"),
       assert: require.resolve("assert"),
@@ -12,7 +12,7 @@ module.exports = function override(config, env) {
       os: require.resolve("os-browserify/browser"),
       buffer: require.resolve("buffer"),
       stream: require.resolve("stream-browserify"),
-    };
+    });
   config.plugins.push(
     new webpack.ProvidePlugin({
       process: "process/browser",

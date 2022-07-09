@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Account from "components/Account/Account";
@@ -66,12 +71,12 @@ const styles = {
 };
 
 const App = ({ isServerInfo }) => {
-  const { isWeb3Enabled, enableWeb3, isWeb3EnableLoading, isAuthenticated } = useMoralis();
+  const { isWeb3Enabled, enableWeb3, isWeb3EnableLoading, isAuthenticated } =
+    useMoralis();
   const particlesInit = async (main) => {
     await loadFull(main);
   };
 
-  
   useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
     if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
@@ -113,7 +118,7 @@ const App = ({ isServerInfo }) => {
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto" }}>
-       <Particles
+      <Particles
         id="tsparticles"
         init={particlesInit}
         options={{
