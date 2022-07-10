@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PureComponent } from 'react';
 import cn from 'classnames'
 import Head from "next/head";
 import { useMoralis } from "react-moralis";
@@ -8,7 +8,6 @@ import { loadFull } from "tsparticles";
 import mainLogo from '../public/logo.png'
 import menuLogo from '../public/menuLogo.png'
 import Image from 'next/image'
-import { PieChart } from 'react-minimal-pie-chart';
 import PageBreak from "../public/PageBreak.svg";
 import * as Scroll from 'react-scroll';
 import PageBreakBottom from "../public/PageBreakBottom.svg";
@@ -18,12 +17,17 @@ import Sticky from 'react-stickynode';
 import NativeBalance from "../components/NativeBalance";
 import Account from "../components/Account/Account";
 import DEX from "../components/DEX";
+import Ramper from "../components/Ramper";
+
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
   const [stickyNav, setStickyNav] = useState(false)
   const ref = React.createRef()
   const { authenticate, isAuthenticated, Moralis } = useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isBuyModalVisible, setIsBuyModalVisible] = useState(false);
+
   Moralis.getSigningData = () => "Adashe (ADSE)";
   let ScrollLink = Scroll.Link;
 
@@ -50,6 +54,14 @@ export default function Home() {
   };
   const shiftSize = 7;
   const [open, setOpen] = useState(false)
+  const data01 = [
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+    { name: 'Group E', value: 278 },
+    { name: 'Group F', value: 189 },
+  ];
 
   const handleStateChange = (status) => {
     if (status.status === Sticky.STATUS_FIXED) {
@@ -60,6 +72,7 @@ export default function Home() {
     }
     return;
   };
+
 
   useEffect(() => {
     const cachedRef = ref.current
@@ -72,7 +85,7 @@ export default function Home() {
   }, [ref])
 
   return (
-    <div>
+    <>
       <Head>
         <title>Adashe</title>
         <meta name="description" content="Adashe" />
@@ -132,6 +145,7 @@ export default function Home() {
           detectRetina: true,
         }}
       />
+
       <header id="hero" className="hero">
         <div className="container">
           <div className="hero-grid">
@@ -147,8 +161,6 @@ export default function Home() {
                   onClick={login}
                 >
                   {isAuthenticated ? <NativeBalance /> : <Account />}
-
-
                 </motion.button>
               </div>
             </div>
@@ -165,41 +177,50 @@ export default function Home() {
       </header>
       <main className="flex flex-col justify-center align-items-center text-center">
         <Sticky onStateChange={handleStateChange}>
-          <section className={cn(stickyNav ? 'tab-stuck' : '', 'tabs')} ref={ref}>
+          <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
+            <div className="container">
+              <ul>
+                <li><a onClick={() => setIsBuyModalVisible(true)}>Buy</a></li>
+                <li><a onClick={() => setIsModalVisible(true)}>Exchange</a></li>
+              </ul>
+            </div>
+          </div>
+          <section className={cn(!stickyNav ? 'tab-stuck' : '', 'tabs')} ref={ref}>
             <div id="topGraphic">
               <PageBreak />
             </div>
-            <div className="menuLogo">
-              <ScrollLink to='hero'>
-                <Image
-                  src={menuLogo}
-                  alt="Logo"
-                  quality="85"
-                  layout="intrinsic"
-                />
-              </ScrollLink>
-            </div>
-            <ul>
-              <li><ScrollLink to='supply' activeClass='selected' spy={true}>Supply</ScrollLink></li>
-              <li><ScrollLink to='terms' activeClass='selected' spy={true}>Terms</ScrollLink></li>
-              <li><ScrollLink to='distribution' activeClass='selected' spy={true}>Fair Distribution</ScrollLink></li>
-              <li><ScrollLink to='allocation' activeClass='selected' spy={true}>Token Allocaton</ScrollLink></li>
-              <li><a onClick={() => setIsModalVisible(true)}>Exchange</a></li>
-            </ul>
-            <div className="utility-nav">
-
-              {/* <TokenPrice
+            <div className="container">
+              <div className="tab-container">
+                <div className="menuLogo">
+                  <ScrollLink to='hero'>
+                    <Image
+                      src={menuLogo}
+                      alt="Logo"
+                      quality="85"
+                      layout="intrinsic"
+                    />
+                  </ScrollLink>
+                </div>
+                <ul>
+                  <li><ScrollLink to='supply' activeClass='selected' spy={true}>Supply</ScrollLink></li>
+                  <li><ScrollLink to='terms' activeClass='selected' spy={true}>Terms</ScrollLink></li>
+                  <li><ScrollLink to='distribution' activeClass='selected' spy={true}>Fair Distribution</ScrollLink></li>
+                  <li><ScrollLink to='allocation' activeClass='selected' spy={true}>Token Allocaton</ScrollLink></li>
+                </ul>
+                <div className="utility-nav">
+                  {/* <TokenPrice
                   address="0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
                   chain="eth"
                   image="https://cloudflare-ipfs.com/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg/"
                   size="40px"
                 /> */}
+                  <NativeBalance />
+                  <Account />
 
+                  <button className="menuButton"><MdSpaceDashboard /></button>
+                </div>
+              </div>
 
-              <NativeBalance />
-              <Account />
-
-              <button className="menuButton"><MdSpaceDashboard /></button>
             </div>
           </section>
         </Sticky>
@@ -228,7 +249,6 @@ export default function Home() {
                   <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
                 </div>
               </motion.div>
-
             </div>
           </div>
         </section>
@@ -254,35 +274,28 @@ export default function Home() {
               >
                 <div className="panel-content">
                   <span className='subheader'><h3>Token Allocation</h3></span>
-                  <p>Check that graph out, yo.</p>
-                  <PieChart
-                    data={[
-                      { title: '30%', value: 30, color: '#775BB4' },
-                      { title: '30%', value: 30, color: '#2E52E1' },
-                      { title: '9.5%', value: 9.5, color: '#775BB4' },
-                      { title: '9.5%', value: 9.5, color: '#2E52E1' },
-                      { title: '3%', value: 3, color: '#775BB4' },
-                      { title: '5%', value: 5, color: '#3174C7' },
-                    ]}
-                    radius={PieChart.defaultProps.radius - shiftSize}
-                    segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
-                    label={({ dataEntry }) => dataEntry.value}
-                    labelStyle={{
-                      ...defaultLabelStyle,
-                    }}
-                    className="pieChart"
-                  />
+                  <div className="pieContainer">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart width={300} height={300}>
+                        <Pie
+                          dataKey="value"
+                          isAnimationActive={false}
+                          data={data01}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={200}
+                          fill="#275dba"
+                          label
+                        />
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
-        {/* <div className="disclaimer">
-          <p>Please make sure you are connected to the right network Mumbai mainnet and the correct address.</p>
-          <p>NOTE: you may need to <Link href={'/'}>bridge</Link> or <Link href={'/'}>swap</Link> assets.</p>
-          <p>We have set the gas limit to 1000000 for the contract to successfully process your order.</p>
-          <p>We recommend that you don&apos;t lower the gas limit.</p>
-        </div> */}
       </main>
       <footer id="footer">
         <div id="bottomGraphic">
@@ -326,10 +339,32 @@ export default function Home() {
           bodyStyle={{ padding: "15px" }}
         >
           <DEX chain="eth" />
-
         </Card>
       </Modal>
-    </div>
+      <Modal
+        visible={isBuyModalVisible}
+        footer={null}
+        onCancel={() => setIsBuyModalVisible(false)}
+        bodyStyle={{
+          padding: "15px",
+          fontSize: "17px",
+          fontWeight: "500",
+        }}
+        style={{ fontSize: "16px", fontWeight: "500" }}
+        width="500px"
+      >
+        Buy
+        <Card
+          style={{
+            marginTop: "10px",
+            borderRadius: "1rem",
+          }}
+          bodyStyle={{ padding: "15px" }}
+        >
+          <Ramper />
+        </Card>
+      </Modal>
+    </>
 
   );
 }

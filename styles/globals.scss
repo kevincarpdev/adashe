@@ -104,7 +104,7 @@ ul {
   @apply mb-0;
 }
 main {
-  @apply relative bg-white pb-36 mt-24;
+  @apply relative bg-white mt-24;
   background-color: #040d21;
 }
 
@@ -378,6 +378,36 @@ footer ul li a:hover {
 }
 .ant-modal-body .ant-btn-primary {
   @apply hover:text-white;
+}
+
+.pieContainer {
+  width: 500px;
+  height: 500px;
+}
+
+
+#allocation {
+  @apply bg-white;
+}
+#allocation .subheader h3 {
+ color: #24292f;
+}
+
+.tertiary-nav {
+  @apply hidden z-20 w-full p-2;
+  background-color: rgb(246, 248, 250);
+}
+.tertiary-nav ul {
+  @apply flex flex-row justify-end gap-x-2 text-black text-lg;
+}
+.tertiary-nav ul li a {
+  @apply text-black text-lg no-underline;
+}
+.sticky-nav .tertiary-nav{
+  @apply flex flex-row;
+}
+.tab-container{
+  @apply flex flex-row justify-between;
 }
 
 // Responsive Media Styles
