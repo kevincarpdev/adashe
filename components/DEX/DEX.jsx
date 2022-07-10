@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { useMoralis } from "react-moralis";
 import InchModal from "./components/InchModal";
-import useInchDex from "hooks/useInchDex";
+import useInchDex from "../../hooks/useInchDex";
 import { Button, Card, Image, Input, InputNumber, Modal } from "antd";
 import Text from "antd/lib/typography/Text";
 import { ArrowDownOutlined } from "@ant-design/icons";
 import { useTokenPrice } from "react-moralis";
-import { tokenValue } from "helpers/formatters";
-import { getWrappedNative } from "helpers/networks";
+import { tokenValue } from "../../helpers/formatters";
+import { getWrappedNative } from "../../helpers/networks";
 // import { useOneInchQuote } from "react-moralis";
 
 const styles = {

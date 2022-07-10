@@ -1,13 +1,17 @@
 import { useMoralis } from "react-moralis";
-import { getEllipsisTxt } from "helpers/formatters";
+import { getEllipsisTxt } from "../../helpers/formatters";
 import Blockie from "../Blockie";
 import { Button, Card, Modal } from "antd";
 import { useState } from "react";
 import Address from "../Address/Address";
 import { SelectOutlined } from "@ant-design/icons";
-import { getExplorer } from "helpers/networks";
+import { getExplorer } from "../../helpers/networks";
 import Text from "antd/lib/typography/Text";
 import { connectors } from "./config";
+import Image from 'next/image'
+import MetaMask from '../../public/WalletIcons/metamaskWallet.png'
+import WalletConnect from '../../public/WalletIcons/wallet-connect.svg'
+
 const styles = {
   account: {
     height: "42px",
@@ -53,7 +57,7 @@ function Account() {
     return (
       <>
         <div onClick={() => setIsAuthModalVisible(true)}>
-          <p style={styles.text}>Authenticate</p>
+          <p style={styles.text}>Connect</p>
         </div>
         <Modal
           visible={isAuthModalVisible}
@@ -93,7 +97,18 @@ function Account() {
                   }
                 }}
               >
-                <img src={icon} alt={title} style={styles.icon} />
+                {connectorId == "injected" ?
+                  <Image
+                    src={MetaMask}
+                    alt={title}
+                    quality="85"
+                    layout="intrinsic"
+                    style={styles.icon}
+                  />
+                :
+                  <WalletConnect className="walletConnect" />
+                }
+                
                 <Text style={{ fontSize: "14px" }}>{title}</Text>
               </div>
             ))}
@@ -105,13 +120,13 @@ function Account() {
 
   return (
     <>
-      {/* <button
+      <button
         onClick={async () => {
           try {
             console.log("change")
             await web3._provider.request({
               method: "wallet_switchEthereumChain",
-              params: [{ chainId: "0x38" }],
+              params: [{ chainId: "0x1" }],
             });
             console.log("changed")
           } catch (e) {
@@ -119,8 +134,7 @@ function Account() {
           }
         }}
       >
-        Hi
-      </button> */}
+      </button>
       <div style={styles.account} onClick={() => setIsModalVisible(true)}>
         <p style={{ marginRight: "5px", ...styles.text }}>
           {getEllipsisTxt(account, 6)}
