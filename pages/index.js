@@ -17,10 +17,9 @@ import NativeBalance from "../components/NativeBalance";
 import Account from "../components/Account/Account";
 import DEX from "../components/DEX";
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
-import Sidebar from "../components/Sidebar";
-// import Ramper from "../components/Ramper";
 import { MdSpaceDashboard, MdClose, MdGeneratingTokens } from 'react-icons/md';
 import { useSpring, animated } from "react-spring";
+// import Ramper from "../components/Ramper";
 
 
 export default function Home() {
