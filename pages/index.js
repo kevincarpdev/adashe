@@ -1,4 +1,4 @@
-import React, { useState, useEffect, PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames'
 import Head from "next/head";
 import { useMoralis } from "react-moralis";
@@ -12,14 +12,16 @@ import PageBreak from "../public/PageBreak.svg";
 import * as Scroll from 'react-scroll';
 import PageBreakBottom from "../public/PageBreakBottom.svg";
 import { motion } from "framer-motion";
-import { MdSpaceDashboard } from 'react-icons/md';
 import Sticky from 'react-stickynode';
 import NativeBalance from "../components/NativeBalance";
 import Account from "../components/Account/Account";
 import DEX from "../components/DEX";
-import Ramper from "../components/Ramper";
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
+import Sidebar from "../components/Sidebar";
+// import Ramper from "../components/Ramper";
+import { MdSpaceDashboard, MdClose, MdGeneratingTokens } from 'react-icons/md';
+import { useSpring, animated } from "react-spring";
 
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Home() {
   const [stickyNav, setStickyNav] = useState(false)
@@ -27,6 +29,7 @@ export default function Home() {
   const { authenticate, isAuthenticated, Moralis } = useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isBuyModalVisible, setIsBuyModalVisible] = useState(false);
+  const [openBar, setOpenBar] = useState();
 
   Moralis.getSigningData = () => "Adashe (ADSE)";
   let ScrollLink = Scroll.Link;
@@ -48,19 +51,13 @@ export default function Home() {
     await loadFull(main);
   };
 
-  const defaultLabelStyle = {
-    fontSize: '5px',
-    fontFamily: 'sans-serif',
-  };
-  const shiftSize = 7;
-  const [open, setOpen] = useState(false)
   const data01 = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-    { name: 'Group E', value: 278 },
-    { name: 'Group F', value: 189 },
+    { name: 'Holders', value: 30 },
+    { name: 'Treasury', value: 30 },
+    { name: 'Burn', value: 15 },
+    { name: 'Unallocated', value: 7.5 },
+    { name: 'Founders', value: 7.5 },
+    { name: 'TBD', value: 4 },
   ];
 
   const handleStateChange = (status) => {
@@ -72,7 +69,10 @@ export default function Home() {
     }
     return;
   };
-
+  const { left } = useSpring({
+    from: { left: "-100%" },
+    left: openBar ? "0" : "-100%"
+  });
 
   useEffect(() => {
     const cachedRef = ref.current
@@ -85,12 +85,13 @@ export default function Home() {
   }, [ref])
 
   return (
-    <>
+    <div>
       <Head>
         <title>Adashe</title>
         <meta name="description" content="Adashe" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -175,13 +176,18 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      <button className="menuButton" onClick={() => setOpenBar(openBar => !openBar)}>
+        {!openBar ? <MdSpaceDashboard /> : <MdClose />}
+      </button>
+
       <main className="flex flex-col justify-center align-items-center text-center">
         <Sticky onStateChange={handleStateChange}>
           <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
             <div className="container">
               <ul>
                 <li><a onClick={() => setIsBuyModalVisible(true)}>Buy</a></li>
-                <li><a onClick={() => setIsModalVisible(true)}>Exchange</a></li>
+                <li><a onClick={() => setOpenSideBar(true)}>Exchange</a></li>
               </ul>
             </div>
           </div>
@@ -204,23 +210,14 @@ export default function Home() {
                 <ul>
                   <li><ScrollLink to='supply' activeClass='selected' spy={true}>Supply</ScrollLink></li>
                   <li><ScrollLink to='terms' activeClass='selected' spy={true}>Terms</ScrollLink></li>
-                  <li><ScrollLink to='distribution' activeClass='selected' spy={true}>Fair Distribution</ScrollLink></li>
-                  <li><ScrollLink to='allocation' activeClass='selected' spy={true}>Token Allocaton</ScrollLink></li>
+                  <li><ScrollLink to='distribution' activeClass='selected' spy={true}><span>Fair</span> Distribution</ScrollLink></li>
+                  <li><ScrollLink to='allocation' activeClass='selected' spy={true}><span>Token</span> Allocaton</ScrollLink></li>
                 </ul>
                 <div className="utility-nav">
-                  {/* <TokenPrice
-                  address="0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"
-                  chain="eth"
-                  image="https://cloudflare-ipfs.com/ipfs/QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg/"
-                  size="40px"
-                /> */}
-                  <NativeBalance />
+                  {/* <NativeBalance /> */}
                   <Account />
-
-                  <button className="menuButton"><MdSpaceDashboard /></button>
                 </div>
               </div>
-
             </div>
           </section>
         </Sticky>
@@ -283,7 +280,7 @@ export default function Home() {
                           data={data01}
                           cx="50%"
                           cy="50%"
-                          outerRadius={200}
+                          outerRadius={100}
                           fill="#275dba"
                           label
                         />
@@ -297,6 +294,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       <footer id="footer">
         <div id="bottomGraphic">
           <PageBreakBottom />
@@ -318,6 +316,41 @@ export default function Home() {
           <li><ScrollLink to='allocation' activeClass='selected' spy={true}>Token Allocaton</ScrollLink></li>
         </ul>
       </footer>
+
+      <animated.div style={{ left: left }} className="sidebar">
+        <button className="menuButton" onClick={() => setOpenBar(openBar => !openBar)}>
+          {!openBar ? <MdSpaceDashboard /> : <MdClose />}
+        </button>
+
+        <div className="sidebar-menu">
+          <div className="tile">
+            <ScrollLink to='supply' activeClass='selected' spy={true}>
+              <MdGeneratingTokens />
+              Supply
+            </ScrollLink>
+          </div>
+          <div className="tile">
+            <ScrollLink to='terms' activeClass='selected' spy={true}>
+              <MdGeneratingTokens />
+              Terms
+            </ScrollLink>
+          </div>
+          <div className="tile">
+            <ScrollLink to='distribution' activeClass='selected' spy={true}>
+              <MdGeneratingTokens />
+              <span>Fair</span> Distribution
+              <p>No front-running</p>
+            </ScrollLink>
+          </div>
+          <div className="tile">
+            <ScrollLink to='allocation' activeClass='selected' spy={true}>
+              <MdGeneratingTokens />
+              <span>Token</span> Allocaton
+            </ScrollLink>
+          </div>
+        </div>
+      </animated.div>
+
       <Modal
         visible={isModalVisible}
         footer={null}
@@ -358,13 +391,15 @@ export default function Home() {
           style={{
             marginTop: "10px",
             borderRadius: "1rem",
+            minHeight: "300px",
           }}
           bodyStyle={{ padding: "15px" }}
         >
-          <Ramper />
+          {/* <Ramper /> */}
+          <p className="coming-soon">Coming Soon</p>
         </Card>
       </Modal>
-    </>
+    </div>
 
   );
 }
