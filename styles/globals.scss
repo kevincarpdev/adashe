@@ -239,11 +239,11 @@ section svg {
 // }
 
 .tabs ul {
-  @apply inline-flex relative z-30 flex-row justify-evenly place-items-center gap-x-8 sm:gap-y-0 sm:flex-row sm:gap-x-6 md:gap-x-12;
+  @apply inline-flex relative z-30 flex-row justify-evenly place-items-center gap-x-4 sm:gap-y-0 sm:flex-row sm:gap-x-6 md:gap-x-12;
 }
 
 .tabs ul li a {
-  @apply relative no-underline text-gray-700 text-base md:text-xl leading-tight;
+  @apply relative no-underline text-gray-700 text-lg md:text-xl leading-tight;
 }
 
 .tabs ul li a.selected {
@@ -316,7 +316,7 @@ footer ul li a:hover {
   @apply fixed left-0 inline-flex place-items-center justify-center md:hidden selection:hidden self-center transition-all ease-in-out;
   font-size: 2.5rem;
   color: #fff;
-  top: 40%;
+  top: 44.8%;
   width: 50px;
   height: 50px;
   background: var(--purple);
@@ -408,8 +408,13 @@ footer ul li a:hover {
 .sticky-nav .tertiary-nav{
   @apply hidden md:flex flex-row;
 }
+
 .tab-container{
-  @apply flex flex-row justify-between md:justify-between;
+  @apply flex flex-row justify-center md:justify-between;
+}
+
+.sticky-nav .tab-container {
+  @apply justify-between;
 }
 .coming-soon {
   @apply text-gray-700 text-sm;

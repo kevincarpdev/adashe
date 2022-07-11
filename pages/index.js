@@ -26,11 +26,10 @@ import { useSpring, animated } from "react-spring";
 export default function Home() {
   const [stickyNav, setStickyNav] = useState(false)
   const ref = React.createRef()
-  const { authenticate, isAuthenticated, Moralis } = useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isBuyModalVisible, setIsBuyModalVisible] = useState(false);
   const [openBar, setOpenBar] = useState();
-
+  const { authenticate, isAuthenticated, Moralis } = useMoralis();
   Moralis.getSigningData = () => "Adashe (ADSE)";
   let ScrollLink = Scroll.Link;
 
@@ -69,9 +68,10 @@ export default function Home() {
     }
     return;
   };
+
   const { left } = useSpring({
-    from: { left: "-100%" },
-    left: openBar ? "0" : "-100%"
+    from: { left: "-105%" },
+    left: openBar ? "0" : "-105%"
   });
 
   useEffect(() => {
