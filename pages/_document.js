@@ -13,7 +13,7 @@ class MyDocument extends Document {
           {/* Add Google fonts here */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-          <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />

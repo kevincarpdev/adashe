@@ -1,7 +1,7 @@
 :root {
   --primary: #8193b2;
-  --fontHeader: "Arvo", serif;
-  --fontBody: "Poppins", sans-serif;
+  --fontHeader: "Montserrat", sans-serif;
+  --fontBody: "Hind", sans-serif;
   --purple: #6244a5;
   --blue: #275dba;
   --darkBlue: #143265;
@@ -129,7 +129,7 @@ main {
 .panel {
   @apply flex text-center p-0 md:p-10 min-h-screen place-items-center;
   border-radius: 8px;
-  // box-shadow: 0 0 0 1px rgb(255 255 255 / 10%), 0 3px 2px rgb(0 0 0 / 4%), 0 7px 5px rgb(0 0 0 / 2%), 0 13px 10px rgb(0 0 0 / 2%), 0 22px 17px rgb(0 0 0 / 2%);
+  /* box-shadow: 0 0 0 1px rgb(255 255 255 / 10%), 0 3px 2px rgb(0 0 0 / 4%), 0 7px 5px rgb(0 0 0 / 2%), 0 13px 10px rgb(0 0 0 / 2%), 0 22px 17px rgb(0 0 0 / 2%); */
 }
 
 .panel.transparent {
@@ -234,9 +234,9 @@ section svg {
   @apply top-0 px-4 py-4 md:py-0 bg-white w-full flex flex-row justify-center md:justify-around place-items-center z-30;
 }
 
-// .tab-stuck {
+/* // .tab-stuck {
 //   box-shadow: inset rgba(140, 149, 159, 0.15) 0px 3px 6px 0px, rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
-// }
+// } */
 
 .tabs ul {
   @apply inline-flex relative z-30 flex-row justify-evenly place-items-center gap-x-4 sm:gap-y-0 sm:flex-row sm:gap-x-6 md:gap-x-12;
@@ -387,12 +387,11 @@ footer ul li a:hover {
   @apply w-10/12 mx-auto;
 }
 
-
 #allocation {
   @apply bg-white;
 }
 #allocation .subheader h3 {
- color: #24292f;
+  color: #24292f;
 }
 
 .tertiary-nav {
@@ -405,11 +404,11 @@ footer ul li a:hover {
 .tertiary-nav ul li a {
   @apply text-gray-700 text-base no-underline hover:underline;
 }
-.sticky-nav .tertiary-nav{
+.sticky-nav .tertiary-nav {
   @apply hidden md:flex flex-row;
 }
 
-.tab-container{
+.tab-container {
   @apply flex flex-row justify-center md:justify-between;
 }
 
@@ -433,10 +432,10 @@ footer ul li a:hover {
 }
 .sidebar-menu .tile {
   @apply flex flex-col justify-center place-items-center text-center;
-  background-color: var(--blue)
+  background-color: var(--blue);
 }
 .sidebar-menu .tile:hover {
-  background-color: var(--darkBlue)
+  background-color: var(--darkBlue);
 }
 .sidebar-menu .tile a {
   @apply flex flex-col justify-center place-items-center no-underline text-white text-center p-8 text-xl leading-tight font-bold break-words;
@@ -450,7 +449,7 @@ footer ul li a:hover {
   @apply text-sm font-normal mt-1;
 }
 
-// Responsive Media Styles
+/* Responsive Media Styles */
 @media screen and (max-width: 768px) {
   .menuLogo {
     max-width: 75px;

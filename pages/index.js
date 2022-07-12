@@ -50,11 +50,10 @@ export default function Home() {
   };
 
   const data01 = [
-    { name: 'Holders', value: 30 },
-    { name: 'Treasury', value: 30 },
+    { name: 'Holders', value: 5 },
+    { name: 'Treasury', value: 5 },
     { name: 'Burn', value: 15 },
-    { name: 'Unallocated', value: 7.5 },
-    { name: 'Founders', value: 7.5 },
+    { name: 'Unallocated', value: 7 },
     { name: 'TBD', value: 4 },
   ];
 
@@ -87,7 +86,7 @@ export default function Home() {
     <div>
       <Head>
         <title>Adashe</title>
-        <meta name="description" content="Adashe" />
+        <meta name="description" content="Adashe is cheaper, faster and more efficient than traditional DeFi platforms, making it more accessible to everyone. Learn more here." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
