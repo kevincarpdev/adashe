@@ -18,18 +18,19 @@ import Account from "../components/Account/Account";
 import DEX from "../components/DEX";
 import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
 import { MdSpaceDashboard, MdClose, MdGeneratingTokens } from 'react-icons/md';
+import { FaDiscord, FaTelegramPlane, FaMediumM, FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { useSpring, animated } from "react-spring";
+import Link from 'next/link';
+
 // import Ramper from "../components/Ramper";
 
-
-export default function Home() {
+const Home = ({ data }) => {
   const [stickyNav, setStickyNav] = useState(false)
   const ref = React.createRef()
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isBuyModalVisible, setIsBuyModalVisible] = useState(false);
   const [openBar, setOpenBar] = useState();
   const { authenticate, isAuthenticated, Moralis } = useMoralis();
-  Moralis.getSigningData = () => "Adashe (ADSE)";
   let ScrollLink = Scroll.Link;
 
   const login = async () => {
@@ -81,6 +82,15 @@ export default function Home() {
     observer.observe(cachedRef)
     return () => observer.unobserve(cachedRef)
   }, [ref])
+
+  // if (!page) {
+  //   return (
+  //     <Error
+  //       title={`"Home Page" is not set in Sanity, or the page data is missing`}
+  //       statusCode="Data Error"
+  //     />
+  //   )
+  // }
 
   return (
     <div>
@@ -179,7 +189,7 @@ export default function Home() {
         {!openBar ? <MdSpaceDashboard /> : <MdClose />}
       </button>
 
-      <main className="flex flex-col justify-center align-items-center text-center">
+      <main className="flex flex-col text-center">
         <Sticky onStateChange={handleStateChange}>
           <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
             <div className="container">
@@ -190,10 +200,53 @@ export default function Home() {
             </div>
           </div>
           <section className={cn(!stickyNav ? 'tab-stuck' : '', 'tabs')} ref={ref}>
-            <div id="topGraphic">
+            {/* <div id="topGraphic">
               <PageBreak />
-            </div>
+            </div> */}
             <div className="container">
+              <div className="card-row">
+                <motion.div
+                  className="card"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <h3>Supply</h3>
+                  <p>A total of a 750,000,000 ADSE (7.5% of the supply) is available for the presale event. The total ADSE supply is 10,000,000,000.</p>
+                </motion.div>
+                <motion.div
+                  className="card"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <h3>Terms</h3>
+                  <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
+                </motion.div>
+                <motion.div
+                  className="card"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <h3>Distribution</h3>
+                  <p>There is no front-running and being first or last doesn&apos;t matter. All participants will receive ADSE at the same rate depending on how much is purchased.</p>
+                </motion.div>
+              </div>
+              <span className='subheader'><h3>Token Allocation</h3></span>
+              <div className="pieContainer">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart width={300} height={300}>
+                    <Pie
+                      dataKey="value"
+                      isAnimationActive={false}
+                      data={data01}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      fill="#275dba"
+                      label
+                    />
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            {/* <div className="container">
               <div className="tab-container">
                 <div className="menuLogo">
                   <ScrollLink to='hero'>
@@ -212,14 +265,13 @@ export default function Home() {
                   <li><ScrollLink to='allocation' activeClass='selected' spy={true}><span>Token</span> Allocaton</ScrollLink></li>
                 </ul>
                 <div className="utility-nav">
-                  {/* <NativeBalance /> */}
                   <Account />
                 </div>
               </div>
-            </div>
+            </div> */}
           </section>
         </Sticky>
-        <section id="supply">
+        {/* <section id="supply">
           <div className="flex items-center justify-center">
             <div className="panel-layout">
               <motion.div
@@ -290,7 +342,7 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
 
       <footer id="footer">
@@ -308,10 +360,38 @@ export default function Home() {
           </ScrollLink>
         </div>
         <ul>
-          <li><ScrollLink to='supply' activeClass='selected' spy={true}>Supply</ScrollLink></li>
-          <li><ScrollLink to='terms' activeClass='selected' spy={true}>Terms</ScrollLink></li>
-          <li><ScrollLink to='distribution' activeClass='selected' spy={true}>Fair Distribution</ScrollLink></li>
-          <li><ScrollLink to='allocation' activeClass='selected' spy={true}>Token Allocaton</ScrollLink></li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://discord.com/invite/GsHbMe5UGv' rel="noopener noreferrer">
+              <FaDiscord />
+            </a>
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://t.me/adashecrypto' rel="noopener noreferrer"><FaTelegramPlane /></a>
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://medium.com/@adashecrypto' rel="noopener noreferrer"><FaMediumM /></a>
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://www.instagram.com/adashecrypto/' rel="noopener noreferrer"><FaInstagram /></a>
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://www.facebook.com/adashecrypto' rel="noopener noreferrer"><FaFacebookF /></a>
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.1 }}
+          >
+            <a target="_blank" href='https://twitter.com/adashecrypto' rel="noopener noreferrer"><FaTwitter /></a>
+          </motion.li>
         </ul>
       </footer>
 
@@ -397,8 +477,18 @@ export default function Home() {
           <p className="coming-soon">Coming Soon</p>
         </Card>
       </Modal>
-    </div>
-
-  );
+    </div >
+  )
 }
 
+
+export async function getStaticProps() {
+
+  return {
+    props: {
+      data: 'Home',
+    },
+  }
+}
+
+export default Home
