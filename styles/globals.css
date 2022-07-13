@@ -203,7 +203,7 @@ img {
 
 .hero {
   @apply relative flex flex-col place-items-center justify-center px-6 pt-8 md:pt-0;
-  min-height: 60vh;
+  min-height: 70vh;
 }
 .hero .subheader {
   @apply ml-0;
@@ -408,7 +408,8 @@ footer ul li a:hover {
   @apply w-10/12 mx-auto;
 }
 #allocation {
-  @apply pt-24 pb-24;
+  padding-top: 9em;
+  padding-bottom: 13em;
   background: linear-gradient(
     135deg,
     rgba(99, 127, 255, 1) 0%,
@@ -495,7 +496,19 @@ footer ul li a:hover {
 .card h3 {
   @apply text-center uppercase break-words;
   /* color: var(--blue); */
+  font-size: 1.6rem;
   color: #fefefe;
+}
+.card h3:after {
+  @apply h-1 w-8 mx-auto mt-2 mb-6;
+  content: "";
+  display: block;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 127, 255, 1) 0%,
+    rgba(158, 46, 240, 1) 100%
+  );
 }
 .pieChart {
   @apply justify-center items-center mx-auto;
@@ -512,7 +525,7 @@ span.recharts-legend-item-text {
   @apply text-lg !text-white;
 }
 #logos {
-  @apply relative py-12;
+  @apply relative py-24;
 }
 .marquee {
   @apply flex flex-row place-items-center items-center;
@@ -525,8 +538,39 @@ span.recharts-legend-item-text {
   border: 1px solid #fff;
 }
 
+section .subheader h3 {
+  @apply text-4xl uppercase;
+}
+.accordion-list {
+  @apply w-full;
+}
+
+.accordion-title {
+  @apply text-xl text-white pl-3 py-3;
+  line-height: 1.5;
+}
+
+.accordion {
+  @apply flex flex-row justify-between p-2 mt-8 mx-auto align-middle place-items-center hover:cursor-pointer;
+  border-radius: 6px;
+  max-width: 700px;
+  background-color: var(--purple);
+}
+
+.accordion-content {
+  @apply text-lg;
+  max-width: 65ch;
+  margin: 0 auto;
+}
+.accordion-icon {
+  @apply flex items-center justify-center text-white;
+}
+
 /* Responsive Media Styles */
 @media screen and (max-width: 768px) {
+  .marquee-img {
+    max-width: 250px;
+  }
   .menuLogo {
     max-width: 75px;
   }

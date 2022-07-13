@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames'
 import Head from "next/head";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useWeb3Transfer } from "react-moralis";
 import { Card, Modal } from "antd";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
@@ -31,6 +31,7 @@ import PalRemit from '../public/palremit.png'
 import Pancake from '../public/pancake.png'
 import TrustWallet from '../public/trustwallet.png'
 import WalletConnect from '../public/walletconnect.png'
+import Accordion from '../components/Accordion/Accordion';
 
 // import Ramper from "../components/Ramper";
 
@@ -96,14 +97,12 @@ const Home = ({ data }) => {
     return () => observer.unobserve(cachedRef)
   }, [ref])
 
-  // if (!page) {
-  //   return (
-  //     <Error
-  //       title={`"Home Page" is not set in Sanity, or the page data is missing`}
-  //       statusCode="Data Error"
-  //     />
-  //   )
-  // }
+  const { fetch, error, isFetching } = useWeb3Transfer({
+    amount: Moralis.Units.Token(20, 18),
+    receiver: "0x0000000000000000000000000000000000000000",
+    type: "erc20",
+    contractAddress: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  });
 
   return (
     <div>
@@ -169,6 +168,7 @@ const Home = ({ data }) => {
       />
 
       <header id="hero" className="hero">
+
         <Sticky onStateChange={handleStateChange}>
           <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
             <div className="container">
@@ -179,20 +179,21 @@ const Home = ({ data }) => {
             </div>
           </div>
         </Sticky>
+
         <div className="container">
           <div className="hero-grid">
             <div className="hero-text">
               <h1>Buy Adashe (ADSE)</h1>
               <div>
-                <span className='subheader'>Adashe is the primary utility token of our ecosystem and enables you to participate in our upcoming generation staking rewards program as well as earn by providing stability to the ADSE Stablecoin.</span>
-                <p><span className="price"><span className="highlight">1 ADSE = $0.00025 USD</span></span></p>
+                <span className='subheader'>Adashe is the primary utility token of our ecosystem and will immediately enable you to participate in our staking rewards program as well as our liquidity mining program. All pools will be deployed when the token sale ends.</span>
+                <p><span className="price"><span className="highlight">1 ADSE = $0.00087 USD</span></span></p>
                 <motion.button
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 1.0 }}
                   className="btn"
                   onClick={login}
                 >
-                  {isAuthenticated ? <ScrollLink to='allocation' spy={true}>Mint <MdOutlineArrowDownward /></ScrollLink> : <Account />}
+                  {isAuthenticated ? <ScrollLink to='mint' spy={true}>Mint <MdOutlineArrowDownward /></ScrollLink> : <Account />}
                 </motion.button>
               </div>
             </div>
@@ -208,16 +209,13 @@ const Home = ({ data }) => {
         </div>
       </header>
 
-      <button className="menuButton" onClick={() => setOpenBar(openBar => !openBar)}>
+      {/* <button className="menuButton" onClick={() => setOpenBar(openBar => !openBar)}>
         {!openBar ? <MdSpaceDashboard /> : <MdClose />}
-      </button>
+      </button> */}
 
       <main className="flex flex-col text-center">
-        <section ref={ref}>
-          {/* <div id="topGraphic">
-              <PageBreak />
-            </div> */}
 
+        <section ref={ref}>
           <div className="container">
             <div className="card-row">
               <motion.div
@@ -232,7 +230,7 @@ const Home = ({ data }) => {
                 whileHover={{ scale: 1.1 }}
               >
                 <h3>Terms</h3>
-                <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
+                <p>The contract accepts WETH or USDC and the starting token price will be $0.00087 per ADSE.</p>
               </motion.div>
               <motion.div
                 className="card"
@@ -242,143 +240,152 @@ const Home = ({ data }) => {
                 <p>There is no front-running and being first or last doesn&apos;t matter. All participants will receive ADSE at the same rate depending on how much is purchased.</p>
               </motion.div>
             </div>
-
-            {isAuthenticated ?
-              <div id="mint">
-
-              </div>
-              :
-              <h2>Please authenticate &amp; connect to mint tokens.</h2>
-            }
-
-            <div id="allocation">
-              <span className='subheader'><h3>Token Allocation</h3></span>
-              <div className="pieContainer hidden md:block">
-                <PieChart width={500} height={500} className="pieChart">
-                  <Pie
-                    dataKey="value"
-                    isAnimationActive={false}
-                    data={data01}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={150}
-                    fill="#313233"
-                    label
-                  />
-                  <Legend />
-                  <Tooltip />
-                </PieChart>
-              </div>
-              <div className="pieContainer block md:hidden">
-                <PieChart width={300} height={300} className="pieChart">
-                  <Pie
-                    dataKey="value"
-                    isAnimationActive={false}
-                    data={data01}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={70}
-                    fill="#313233"
-                    label
-                  />
-                  <Legend />
-                  <Tooltip />
-                </PieChart>
-              </div>
-            </div>
-            <div id="logos">
-              <Marquee
-                pauseOnHover={false}
-                speed={20}
-                gradient={true}
-                className="marquee"
-              >
-                <div className="marquee-img">
-                  <Image
-                    src={Uniswap}
-                    alt="Uniswap"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-
-                <div className="marquee-img">
-                  <Image
-                    src={DYDX}
-                    alt="DYDX"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-
-                <div className="marquee-img">
-                  <Image
-                    src={CoinBase}
-                    alt="CoinBase"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-
-                <div className="marquee-img">
-                  <Image
-                    src={Metamask}
-                    alt="MetaMask"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-
-                <div className="marquee-img">
-                  <Image
-                    src={PalRemit}
-                    alt="PalRemit"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-                <div className="marquee-img">
-                  <Image
-                    src={Pancake}
-                    alt="Pancake"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-                <div className="marquee-img">
-                  <Image
-                    src={TrustWallet}
-                    alt="TrustWallet"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-                <div className="marquee-img">
-                  <Image
-                    src={WalletConnect}
-                    alt="WalletConnect"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </div>
-              </Marquee>
-            </div>
-
-            <div className="tab-container">
-              <div className="menuLogo">
-                <ScrollLink to='hero'>
-                  <Image
-                    src={menuLogo}
-                    alt="Logo"
-                    quality="85"
-                    layout="intrinsic"
-                  />
-                </ScrollLink>
-              </div>
-            </div>
-
           </div>
+        </section>
 
+        <section id="mint">
+          {isAuthenticated ?
+            <>
+              <span className='subheader'><h3>Buy Adashe</h3></span>
+              <button onClick={() => fetch()} disabled={isFetching}>Purchase</button>
+            </>
+
+            :
+            <span className='subheader'><h3>Please authenticate &amp; connect to mint tokens.</h3></span>
+          }
+        </section>
+
+        <section id="allocation">
+          <div className="container">
+            <span className='subheader'><h3>Token Allocation</h3></span>
+            <div className="pieContainer hidden md:block">
+              <PieChart width={500} height={500} className="pieChart">
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={false}
+                  data={data01}
+                  fill="#313233"
+                  label
+                />
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </div>
+            <div className="pieContainer block md:hidden">
+              <PieChart width={300} height={300} className="pieChart">
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={false}
+                  data={data01}
+                  fill="#313233"
+                  label
+                />
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </div>
+          </div>
+        </section>
+
+        <section id="logos">
+          <span className='subheader'><h3>Exchanges &amp; Wallets</h3></span>
+          <Marquee
+            pauseOnHover={false}
+            speed={20}
+            gradient={true}
+            className="marquee"
+          >
+            <div className="marquee-img">
+              <Image
+                src={Uniswap}
+                alt="Uniswap"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+
+            <div className="marquee-img">
+              <Image
+                src={DYDX}
+                alt="DYDX"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+
+            <div className="marquee-img">
+              <Image
+                src={CoinBase}
+                alt="CoinBase"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+
+            <div className="marquee-img">
+              <Image
+                src={Metamask}
+                alt="MetaMask"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+
+            <div className="marquee-img">
+              <Image
+                src={PalRemit}
+                alt="PalRemit"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+            <div className="marquee-img">
+              <Image
+                src={Pancake}
+                alt="Pancake"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+            <div className="marquee-img">
+              <Image
+                src={TrustWallet}
+                alt="TrustWallet"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+            <div className="marquee-img">
+              <Image
+                src={WalletConnect}
+                alt="WalletConnect"
+                quality="85"
+                layout="intrinsic"
+              />
+            </div>
+          </Marquee>
+        </section>
+
+        <section id="faq">
+          <span className='subheader'><h3>FAQ</h3></span>
+          <div className="accordion-list">
+            <div className="container">
+              <Accordion />
+            </div>
+          </div>
+        </section>
+
+        <section className="tab-container">
+          <div className="menuLogo">
+            <ScrollLink to='hero'>
+              <Image
+                src={menuLogo}
+                alt="Logo"
+                quality="85"
+                layout="intrinsic"
+              />
+            </ScrollLink>
+          </div>
         </section>
       </main>
 
