@@ -33,6 +33,9 @@ import TrustWallet from '../public/trustwallet.png'
 import WalletConnect from '../public/walletconnect.png'
 import Accordion from '../components/Accordion/Accordion';
 import Wallet from "../components/Wallet";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // import Ramper from "../components/Ramper";
 
@@ -87,6 +90,16 @@ const Home = ({ data }) => {
     from: { left: "-105%" },
     left: openBar ? "0" : "-105%"
   });
+  const notify = () =>
+    toast.warn('ADSE is only available on via MATIC. Please switch to the Polygon network in order to purchase ADSE.', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   useEffect(() => {
     const cachedRef = ref.current
@@ -196,6 +209,8 @@ const Home = ({ data }) => {
                 >
                   {isAuthenticated ? <ScrollLink to='mint' spy={true}>Mint <MdOutlineArrowDownward /></ScrollLink> : <Account />}
                 </motion.button>
+                <button onClick={notify}>Notify!</button>
+
               </div>
             </div>
             <div className="logo">
@@ -376,8 +391,8 @@ const Home = ({ data }) => {
 
         <section id="faq">
           <span className='subheader'><h3>FAQ</h3></span>
-          <div className="accordion-list">
-            <div className="container">
+          <div className="container">
+            <div className="accordion-list">
               <Accordion />
             </div>
           </div>
@@ -446,6 +461,9 @@ const Home = ({ data }) => {
           </motion.li>
         </ul>
       </footer>
+      <div id="notification">
+        <ToastContainer />
+      </div>
 
       <animated.div style={{ left: left }} className="sidebar">
         <button className="menuButton" onClick={() => setOpenBar(openBar => !openBar)}>

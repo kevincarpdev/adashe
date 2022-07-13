@@ -163,7 +163,7 @@ main {
 
 .btn {
   @apply mt-4 no-underline;
-  padding: 15px 25px 13px 25px;
+  padding: 15px 15px 10px 25px;
   border-radius: 4px;
   background: linear-gradient(
     135deg,
@@ -178,14 +178,14 @@ main {
 
 .btn p,
 .btn a {
-  @apply mb-0 leading-tight no-underline;
-  font-size: 1rem;
+  @apply mb-0 no-underline;
+  font-size: 1.4rem;
   line-height: 1;
   font-weight: 600;
   color: #fff !important;
 }
 .btn svg {
-  @apply inline-block;
+  @apply inline-block relative -top-0.5;
 }
 
 img {
@@ -222,7 +222,9 @@ img {
 .hero-text h1 {
   @apply mb-2 md:mb-0;
 }
-
+.hero-text .highlight {
+  @apply opacity-70;
+}
 span.highlight {
   color: #fff;
 }
@@ -525,7 +527,8 @@ footer ul li a:hover {
   @apply !relative mx-auto;
 }
 span.recharts-legend-item-text {
-  @apply text-lg !text-white;
+  @apply text-lg !text-white mb-1 inline-block;
+  font-size: 1.3rem;
 }
 #logos {
   @apply relative py-24 bg-white;
@@ -545,7 +548,7 @@ section .subheader h3 {
   @apply text-4xl uppercase;
 }
 .accordion-list {
-  @apply w-full px-4 md:px-0;
+  @apply w-full px-4 md:px-0 text-left;
 }
 
 .accordion-title {
@@ -554,9 +557,8 @@ section .subheader h3 {
 }
 
 .accordion {
-  @apply flex flex-row justify-between p-2 mt-8 mx-auto align-middle place-items-center hover:cursor-pointer;
+  @apply flex flex-row justify-between p-2 mt-8 mx-auto align-middle place-items-center hover:cursor-pointer w-full;
   border-radius: 6px;
-  max-width: 700px;
   background-color: var(--purple);
 }
 
@@ -602,7 +604,10 @@ section#info {
   font-size: 16px;
   font-weight: 500;
 }
-
+.recharts-layer tspan {
+  font-size: 1.3rem;
+  fill: #fff;
+}
 /* Responsive Media Styles */
 @media screen and (max-width: 768px) {
   .buyCard {

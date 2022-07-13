@@ -9,7 +9,6 @@ const AccordionLayout = ({ title, children, index, activeIndex, setActiveIndex }
 
   return (
     <>
-    <div className="container">
         <div onClick={() => handleSetIndex(index)} className='accordion'>
             <h4 className='accordion-title'>{title}</h4>
             <div className="accordion-icon">
@@ -26,7 +25,6 @@ const AccordionLayout = ({ title, children, index, activeIndex, setActiveIndex }
               {children}
             </div>
         )}
-        </div>
     </>
   );
 };
