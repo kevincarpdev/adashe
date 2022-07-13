@@ -216,7 +216,7 @@ const Home = ({ data }) => {
 
       <main className="flex flex-col text-center">
 
-        <section ref={ref}>
+        <section id="info" ref={ref}>
           <div className="container">
             <div className="card-row">
               <motion.div
@@ -247,7 +247,7 @@ const Home = ({ data }) => {
         <section id="mint">
           {isAuthenticated ?
             <>
-              <span className='subheader'><h3>Buy Adashe</h3></span>
+              <span className='subheader highlight'><h3>Buy Adashe</h3></span>
               <Wallet />
             </>
 

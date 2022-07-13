@@ -202,7 +202,7 @@ img {
 }
 
 .hero {
-  @apply relative flex flex-col place-items-center justify-center px-6 pt-8 md:pt-0;
+  @apply relative flex flex-col place-items-center justify-center px-6 pt-8 md:pt-0 pb-12;
   min-height: 70vh;
 }
 .hero .subheader {
@@ -218,6 +218,9 @@ img {
 
 .hero-text {
   @apply order-2 col-span-2 lg:order-1 text-center lg:text-left;
+}
+.hero-text h1 {
+  @apply mb-2 md:mb-0;
 }
 
 span.highlight {
@@ -334,7 +337,7 @@ footer ul li a:hover {
 }
 
 .menuButton {
-  @apply fixed left-0 inline-flex place-items-center justify-center md:hidden selection:hidden self-center transition-all ease-in-out;
+  @apply fixed left-0 hidden place-items-center justify-center md:hidden selection:hidden self-center transition-all ease-in-out;
   font-size: 2.5rem;
   color: #fff;
   top: 44.8%;
@@ -485,7 +488,7 @@ footer ul li a:hover {
   box-shadow: 0px 5px 35px 0px rgb(0 0 0 / 30%);
   color: #fefefe;
   border-radius: 15px;
-  padding: 1rem 2em 2em 2em;
+  padding: 1.5em 2em 2em 2em;
   /* background: linear-gradient(
     135deg,
     rgba(99, 127, 255, 1) 0%,
@@ -495,8 +498,8 @@ footer ul li a:hover {
 }
 .card h3 {
   @apply text-center uppercase break-words;
-  /* color: var(--blue); */
-  font-size: 1.6rem;
+  letter-spacing: 1px;
+  font-size: 1.8rem;
   color: #fefefe;
 }
 .card h3:after {
@@ -525,7 +528,7 @@ span.recharts-legend-item-text {
   @apply text-lg !text-white;
 }
 #logos {
-  @apply relative py-24;
+  @apply relative py-24 bg-white;
 }
 .marquee {
   @apply flex flex-row place-items-center items-center;
@@ -542,7 +545,7 @@ section .subheader h3 {
   @apply text-4xl uppercase;
 }
 .accordion-list {
-  @apply w-full;
+  @apply w-full px-4 md:px-0;
 }
 
 .accordion-title {
@@ -566,14 +569,42 @@ section .subheader h3 {
   @apply flex items-center justify-center text-white;
 }
 section#mint {
-  @apply py-12;
+  @apply pb-24;
 }
 section .subheader {
-  @apply mb-4;
+  @apply mb-10;
+}
+section#faq {
+  @apply py-24;
+}
+section#info {
+  @apply pb-0;
+}
+
+.subheader.highlight h3 {
+  font-size: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 127, 255, 1) 0%,
+    rgba(158, 46, 240, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.buyCard {
+  border: 1px solid #e7eaf3;
+  box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+  border-radius: 1rem;
+  width: 600px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 /* Responsive Media Styles */
 @media screen and (max-width: 768px) {
+  .buyCard {
+    width: 350px;
+  }
   .marquee-img {
     max-width: 250px;
   }

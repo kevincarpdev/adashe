@@ -14,9 +14,9 @@ export default function AssetSelector({ setAsset, style }) {
       ...assets,
       {
         balance: nativeBalance.balance,
-        decimals: nativeToken.decimals,
-        name: nativeToken.name,
-        symbol: nativeToken.symbol,
+        decimals: nativeToken?.decimals,
+        name: nativeToken?.name,
+        symbol: nativeToken?.symbol,
         token_address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       },
     ];
@@ -56,6 +56,7 @@ export default function AssetSelector({ setAsset, style }) {
                   preview={false}
                   style={{ borderRadius: "15px" }}
                 />
+                {item.decimals &&
                 <div
                   style={{
                     display: "flex",
@@ -72,6 +73,8 @@ export default function AssetSelector({ setAsset, style }) {
                     )
                   </p>
                 </div>
+                }
+                
               </div>
             </Select.Option>
           );

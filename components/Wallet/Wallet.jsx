@@ -14,21 +14,13 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     gap: "5px",
-  },
-  card: {
-    boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
-    border: "1px solid #e7eaf3",
-    borderRadius: "1rem",
-    width: "450px",
-    fontSize: "16px",
-    fontWeight: "500",
-  },
+  }
 };
 
 function Wallet() {
   return (
     <Card
-      style={styles.card}
+      className="buyCard"
       title={
         <div style={styles.header}>
           <Blockie scale={5} avatar currentWallet style />

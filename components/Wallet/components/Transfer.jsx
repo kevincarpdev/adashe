@@ -120,9 +120,9 @@ function Transfer() {
   return (
     <div style={styles.card}>
       <div style={styles.tranfer}>
-        <div style={styles.header}>
-          <h3>Transfer Assets</h3>
-        </div>
+        {/* <div style={styles.header}>
+          <h3>Preorder</h3>
+        </div> */}
         <div style={styles.select}>
           <div style={styles.textWrapper}>
             <Text strong>Address:</Text>
@@ -155,7 +155,7 @@ function Transfer() {
           onClick={() => transfer()}
           disabled={!tx}
         >
-          Transfer💸
+          Preorder
         </Button>
       </div>
     </div>
