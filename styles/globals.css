@@ -565,6 +565,9 @@ section .subheader h3 {
   max-width: 65ch;
   margin: 0 auto;
 }
+.accordion-content a {
+  color: inherit;
+}
 .accordion-icon {
   @apply flex items-center justify-center text-white;
 }

@@ -245,14 +245,21 @@ const Home = ({ data }) => {
         </section>
 
         <section id="mint">
+          <span className='subheader highlight'><h3>Buy Adashe</h3></span>
           {isAuthenticated ?
             <>
-              <span className='subheader highlight'><h3>Buy Adashe</h3></span>
               <Wallet />
             </>
 
             :
-            <span className='subheader'><h3>Please authenticate &amp; connect to mint tokens.</h3></span>
+            <motion.button
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.0 }}
+              className="btn"
+              onClick={login}
+            >
+              {!isAuthenticated ? <Account /> : <></>}
+            </motion.button>
           }
         </section>
 
