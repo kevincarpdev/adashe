@@ -16,11 +16,21 @@ import Sticky from 'react-stickynode';
 import NativeBalance from "../components/NativeBalance";
 import Account from "../components/Account/Account";
 import DEX from "../components/DEX";
-import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
-import { MdSpaceDashboard, MdClose, MdGeneratingTokens } from 'react-icons/md';
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import { MdSpaceDashboard, MdClose, MdGeneratingTokens, MdOutlineArrowDownward } from 'react-icons/md';
 import { FaDiscord, FaTelegramPlane, FaMediumM, FaInstagram, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { useSpring, animated } from "react-spring";
 import Link from 'next/link';
+import Marquee from "react-fast-marquee";
+import Uniswap from '../public/uniswap.png'
+import DYDX from '../public/dydx.png'
+import CoinBase from '../public/coinbase.png'
+import Metamask from '../public/metamask.png'
+import Metamask2 from '../public/metamask2.png'
+import PalRemit from '../public/palremit.png'
+import Pancake from '../public/pancake.png'
+import TrustWallet from '../public/trustwallet.png'
+import WalletConnect from '../public/walletconnect.png'
 
 // import Ramper from "../components/Ramper";
 
@@ -51,11 +61,14 @@ const Home = ({ data }) => {
   };
 
   const data01 = [
-    { name: 'Holders', value: 5 },
-    { name: 'Treasury', value: 5 },
-    { name: 'Burn', value: 15 },
-    { name: 'Unallocated', value: 7 },
-    { name: 'TBD', value: 4 },
+    { name: 'Presale', value: 20.09 },
+    { name: 'Marketing', value: 2.5 },
+    { name: 'Team Allocation', value: 7 },
+    { name: 'Strategic Partners', value: 2.5 },
+    { name: 'Reserves', value: 23.72 },
+    { name: 'DeFi Staking Rewards', value: 30 },
+    { name: 'Partner Recruitment', value: 2.5 },
+    { name: 'Initial Token Sales', value: 21.78 },
   ];
 
   const handleStateChange = (status) => {
@@ -156,6 +169,16 @@ const Home = ({ data }) => {
       />
 
       <header id="hero" className="hero">
+        <Sticky onStateChange={handleStateChange}>
+          <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
+            <div className="container">
+              <ul>
+                <li><a onClick={() => setIsBuyModalVisible(true)}>Buy</a></li>
+                <li><a onClick={() => setOpenSideBar(true)}>Exchange</a></li>
+              </ul>
+            </div>
+          </div>
+        </Sticky>
         <div className="container">
           <div className="hero-grid">
             <div className="hero-text">
@@ -169,7 +192,7 @@ const Home = ({ data }) => {
                   className="btn"
                   onClick={login}
                 >
-                  {isAuthenticated ? <NativeBalance /> : <Account />}
+                  {isAuthenticated ? <ScrollLink to='allocation' spy={true}>Mint <MdOutlineArrowDownward /></ScrollLink> : <Account />}
                 </motion.button>
               </div>
             </div>
@@ -190,159 +213,173 @@ const Home = ({ data }) => {
       </button>
 
       <main className="flex flex-col text-center">
-        <Sticky onStateChange={handleStateChange}>
-          <div className={cn(!stickyNav ? 'stuck' : '', 'tertiary-nav')}>
-            <div className="container">
-              <ul>
-                <li><a onClick={() => setIsBuyModalVisible(true)}>Buy</a></li>
-                <li><a onClick={() => setOpenSideBar(true)}>Exchange</a></li>
-              </ul>
-            </div>
-          </div>
-          <section className={cn(!stickyNav ? 'tab-stuck' : '', 'tabs')} ref={ref}>
-            {/* <div id="topGraphic">
+        <section ref={ref}>
+          {/* <div id="topGraphic">
               <PageBreak />
             </div> */}
-            <div className="container">
-              <div className="card-row">
-                <motion.div
-                  className="card"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <h3>Supply</h3>
-                  <p>A total of a 750,000,000 ADSE (7.5% of the supply) is available for the presale event. The total ADSE supply is 10,000,000,000.</p>
-                </motion.div>
-                <motion.div
-                  className="card"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <h3>Terms</h3>
-                  <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
-                </motion.div>
-                <motion.div
-                  className="card"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <h3>Distribution</h3>
-                  <p>There is no front-running and being first or last doesn&apos;t matter. All participants will receive ADSE at the same rate depending on how much is purchased.</p>
-                </motion.div>
+
+          <div className="container">
+            <div className="card-row">
+              <motion.div
+                className="card"
+                whileHover={{ scale: 1.1 }}
+              >
+                <h3>Supply</h3>
+                <p>A total of a 750,000,000 ADSE (7.5% of the supply) is available for the presale event. The total ADSE supply is 10,000,000,000.</p>
+              </motion.div>
+              <motion.div
+                className="card"
+                whileHover={{ scale: 1.1 }}
+              >
+                <h3>Terms</h3>
+                <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
+              </motion.div>
+              <motion.div
+                className="card"
+                whileHover={{ scale: 1.1 }}
+              >
+                <h3>Distribution</h3>
+                <p>There is no front-running and being first or last doesn&apos;t matter. All participants will receive ADSE at the same rate depending on how much is purchased.</p>
+              </motion.div>
+            </div>
+
+            {isAuthenticated ?
+              <div id="mint">
+
               </div>
+              :
+              <h2>Please authenticate &amp; connect to mint tokens.</h2>
+            }
+
+            <div id="allocation">
               <span className='subheader'><h3>Token Allocation</h3></span>
-              <div className="pieContainer">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart width={300} height={300}>
-                    <Pie
-                      dataKey="value"
-                      isAnimationActive={false}
-                      data={data01}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      fill="#275dba"
-                      label
-                    />
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
+              <div className="pieContainer hidden md:block">
+                <PieChart width={500} height={500} className="pieChart">
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={data01}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={150}
+                    fill="#313233"
+                    label
+                  />
+                  <Legend />
+                  <Tooltip />
+                </PieChart>
+              </div>
+              <div className="pieContainer block md:hidden">
+                <PieChart width={300} height={300} className="pieChart">
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={data01}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={70}
+                    fill="#313233"
+                    label
+                  />
+                  <Legend />
+                  <Tooltip />
+                </PieChart>
               </div>
             </div>
-            {/* <div className="container">
-              <div className="tab-container">
-                <div className="menuLogo">
-                  <ScrollLink to='hero'>
-                    <Image
-                      src={menuLogo}
-                      alt="Logo"
-                      quality="85"
-                      layout="intrinsic"
-                    />
-                  </ScrollLink>
+            <div id="logos">
+              <Marquee
+                pauseOnHover={false}
+                speed={20}
+                gradient={true}
+                className="marquee"
+              >
+                <div className="marquee-img">
+                  <Image
+                    src={Uniswap}
+                    alt="Uniswap"
+                    quality="85"
+                    layout="intrinsic"
+                  />
                 </div>
-                <ul>
-                  <li><ScrollLink to='supply' activeClass='selected' spy={true}>Supply</ScrollLink></li>
-                  <li><ScrollLink to='terms' activeClass='selected' spy={true}>Terms</ScrollLink></li>
-                  <li><ScrollLink to='distribution' activeClass='selected' spy={true}><span>Fair</span> Distribution</ScrollLink></li>
-                  <li><ScrollLink to='allocation' activeClass='selected' spy={true}><span>Token</span> Allocaton</ScrollLink></li>
-                </ul>
-                <div className="utility-nav">
-                  <Account />
+
+                <div className="marquee-img">
+                  <Image
+                    src={DYDX}
+                    alt="DYDX"
+                    quality="85"
+                    layout="intrinsic"
+                  />
                 </div>
+
+                <div className="marquee-img">
+                  <Image
+                    src={CoinBase}
+                    alt="CoinBase"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+
+                <div className="marquee-img">
+                  <Image
+                    src={Metamask}
+                    alt="MetaMask"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+
+                <div className="marquee-img">
+                  <Image
+                    src={PalRemit}
+                    alt="PalRemit"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+                <div className="marquee-img">
+                  <Image
+                    src={Pancake}
+                    alt="Pancake"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+                <div className="marquee-img">
+                  <Image
+                    src={TrustWallet}
+                    alt="TrustWallet"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+                <div className="marquee-img">
+                  <Image
+                    src={WalletConnect}
+                    alt="WalletConnect"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </div>
+              </Marquee>
+            </div>
+
+            <div className="tab-container">
+              <div className="menuLogo">
+                <ScrollLink to='hero'>
+                  <Image
+                    src={menuLogo}
+                    alt="Logo"
+                    quality="85"
+                    layout="intrinsic"
+                  />
+                </ScrollLink>
               </div>
-            </div> */}
-          </section>
-        </Sticky>
-        {/* <section id="supply">
-          <div className="flex items-center justify-center">
-            <div className="panel-layout">
-              <motion.div
-                className="panel"
-              >
-                <div className="panel-content">
-                  <span className='subheader'><h3>Supply</h3></span>
-                  <p>A total of a 750,000,000 ADSE (7.5% of the supply) is available for the presale event. The total ADSE supply is 10,000,000,000.</p>
-                </div>
-              </motion.div>
             </div>
+
           </div>
+
         </section>
-        <section id="terms">
-          <div className="flex items-center justify-center">
-            <div className="panel-layout">
-              <motion.div
-                className="panel"
-              >
-                <div className="panel-content">
-                  <span className='subheader'><h3>Terms</h3></span>
-                  <p>The contract accepts MATIC and the token price will begin at $0.000025 or 3200 ADSE per MATIC. The event will run until all tokens are sold.</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-        <section id="distribution">
-          <div className="flex items-center justify-center">
-            <div className="panel-layout">
-              <motion.div
-                className="panel"
-              >
-                <div className="panel-content">
-                  <span className='subheader'><h3>Fair Distribution</h3></span>
-                  <p>There is no front-running and being first or last doesn&apos;t matter. All participants will receive ADSE at the same rate depending on how much is purchased.</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-        <section id="allocation">
-          <div className="flex items-center justify-center">
-            <div className="panel-layout">
-              <motion.div
-                className="panel"
-              >
-                <div className="panel-content">
-                  <span className='subheader'><h3>Token Allocation</h3></span>
-                  <div className="pieContainer">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart width={300} height={300}>
-                        <Pie
-                          dataKey="value"
-                          isAnimationActive={false}
-                          data={data01}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={100}
-                          fill="#275dba"
-                          label
-                        />
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section> */}
       </main>
 
       <footer id="footer">
