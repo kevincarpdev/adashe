@@ -32,6 +32,7 @@ import Pancake from '../public/pancake.png'
 import TrustWallet from '../public/trustwallet.png'
 import WalletConnect from '../public/walletconnect.png'
 import Accordion from '../components/Accordion/Accordion';
+import Wallet from "../components/Wallet";
 
 // import Ramper from "../components/Ramper";
 
@@ -97,12 +98,12 @@ const Home = ({ data }) => {
     return () => observer.unobserve(cachedRef)
   }, [ref])
 
-  const { fetch, error, isFetching } = useWeb3Transfer({
-    amount: Moralis.Units.Token(20, 18),
-    receiver: "0x0000000000000000000000000000000000000000",
-    type: "erc20",
-    contractAddress: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-  });
+  // const { fetch, error, isFetching } = useWeb3Transfer({
+  //   amount: Moralis.Units.Token(20, 18),
+  //   receiver: "0x0000000000000000000000000000000000000000",
+  //   type: "erc20",
+  //   contractAddress: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  // });
 
   return (
     <div>
@@ -247,7 +248,7 @@ const Home = ({ data }) => {
           {isAuthenticated ?
             <>
               <span className='subheader'><h3>Buy Adashe</h3></span>
-              <button onClick={() => fetch()} disabled={isFetching}>Purchase</button>
+              <Wallet />
             </>
 
             :

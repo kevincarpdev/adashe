@@ -565,6 +565,12 @@ section .subheader h3 {
 .accordion-icon {
   @apply flex items-center justify-center text-white;
 }
+section#mint {
+  @apply py-12;
+}
+section .subheader {
+  @apply mb-4;
+}
 
 /* Responsive Media Styles */
 @media screen and (max-width: 768px) {
